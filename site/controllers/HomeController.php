@@ -38,8 +38,6 @@ class HomeController extends AbstractSlimController
                 throw new Exception("There was an issue with the uploading of the file.");
             }
 
-            $content = file_get_contents($file->getFilepath());
-
             $command = __DIR__ . "/node_modules/.bin/mjml --validate \"{$file->getFilepath()}\"";
             $output = shell_exec($command);
 
@@ -60,9 +58,7 @@ class HomeController extends AbstractSlimController
             }
             else
             {
-                $tempName = tempnam(sys_get_temp_dir(), "upload-file-");
-                move_uploaded_file($file->getFilepath(), $tempName);
-                $command2 = __DIR__ . "/../node_modules/.bin/mjml $tempName --stdout";
+                $command2 = __DIR__ . "/../node_modules/.bin/mjml {$file->getFilepath()} --stdout";
                 $output = shell_exec($command2);
                 $response = new \Slim\Psr7\Response();
                 $body = $response->getBody();
