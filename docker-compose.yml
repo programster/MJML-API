@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: mjml-server
+    image: programster/mjml-server
+    restart: always
+    ports:
+      - "80:80"
+
+

@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Don't redirect if matches file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Don't redirect if matches directory
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect everything else to index.php
+RewriteRule ^ index.php [QSA,L]
