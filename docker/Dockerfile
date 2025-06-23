@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -13,8 +13,8 @@ RUN apt-get update && apt-get dist-upgrade -y
 # Install the relevant packages
 # Need mysql-client for mysqldump command on backup endpoint.
 RUN apt-get install -y \
-    vim cron curl apache2 libapache2-mod-php8.1 \
-    php8.1-curl
+    vim cron curl apache2 libapache2-mod-php8.3 \
+    php8.3-curl
 
 # Install composer 2
 RUN apt-get update \
@@ -30,7 +30,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 
 
 # Enable the apache mods
-RUN a2enmod php8.1 && a2enmod rewrite
+RUN a2enmod php8.3 && a2enmod rewrite
 
 
 # expose port 80 and 443 (ssl) for the web requests
@@ -52,11 +52,11 @@ ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
 # Uncomment any of these if you need them.
 
 # Increase php's max allowed memory size
-RUN sed -i 's;memory_limit = .*;memory_limit = -1;' /etc/php/8.1/apache2/php.ini
-RUN sed -i 's;memory_limit = .*;memory_limit = -1;' /etc/php/8.1/cli/php.ini
+RUN sed -i 's;memory_limit = .*;memory_limit = -1;' /etc/php/8.3/apache2/php.ini
+RUN sed -i 's;memory_limit = .*;memory_limit = -1;' /etc/php/8.3/cli/php.ini
 
-RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/8.1/apache2/php.ini
-RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/8.1/cli/php.ini
+RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/8.3/apache2/php.ini
+RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/8.3/cli/php.ini
 
 
 
