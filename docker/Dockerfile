@@ -38,13 +38,13 @@ EXPOSE 80
 
 
 # Manually set the apache environment variables in order to get apache to work immediately.
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_RUN_USER=www-data
+ENV APACHE_RUN_GROUP=www-data
+ENV APACHE_LOG_DIR=/var/log/apache2
 
 # It appears that the new apache requires these env vars as well
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_PID_FILE /var/run/apache2/apache2.pid
+ENV APACHE_LOCK_DIR=/var/lock/apache2
+ENV APACHE_PID_FILE=/var/run/apache2/apache2.pid
 
 
 ###### Update the php INI settings #########
@@ -75,11 +75,11 @@ ADD docker/apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 
 
 # Set permissions
-#RUN chown root:www-data -R /var/www
-RUN cd /var/www/site && composer install && chown root:www-data -R vendor
+#RUN chown root:www-data --recursive /var/www
+RUN cd /var/www/site && composer install && chown root:www-data --recursive vendor
 
 RUN chown root:www-data /var/www
-RUN chmod 750 -R /var/www
+RUN chmod 750 --recursive /var/www
 
 # Execute the containers startup script which will start many processes/services
 # The startup file was already added when we added "project"
