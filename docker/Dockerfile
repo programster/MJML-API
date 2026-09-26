@@ -84,7 +84,4 @@ RUN cd /var/www/site && composer install && chown root:www-data --recursive vend
 RUN chown root:www-data /var/www
 RUN chmod 750 --recursive /var/www
 
-# Execute the containers startup script which will start many processes/services
-# The startup file was already added when we added "project"
-COPY --chown=root:root docker/startup.sh /root/startup.sh
 CMD ["apache2", "-D", "FOREGROUND"]
